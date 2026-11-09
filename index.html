@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#10243a">
+  <meta name="description" content="Perekam rapat offline dan online dengan penyimpanan lokal.">
+  <title>Husnayain Meeting AI — Tahap 1</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-mark">HM</div>
+        <div><strong>Meeting Notes</strong><span>HUSNAYAIN</span></div>
+      </div>
+      <nav>
+        <a class="nav-item active" href="#recorder"><span>◉</span> Perekam</a>
+        <a class="nav-item" href="#library"><span>▤</span> Riwayat rekaman</a>
+      </nav>
+      <div class="side-note"><span class="dot"></span> Penyimpanan lokal aktif<br><small>Audio tersimpan di perangkat ini</small></div>
+      <div class="sidebar-footer">TAHAP 1 · PWA RECORDER</div>
+    </aside>
+
+    <main>
+      <header class="topbar">
+        <div><p class="eyebrow">ASISTEN RAPAT DIGITAL</p><h1>Ruang Rapat</h1></div>
+        <div class="local-badge"><span class="dot"></span> Lokal & privat</div>
+      </header>
+
+      <section class="hero" id="recorder">
+        <div class="hero-copy">
+          <p class="eyebrow light">REKAM RAPAT</p>
+          <h2>Setiap diskusi,<br><em>tercatat dengan baik.</em></h2>
+          <p>Rekam rapat offline maupun online dari mikrofon perangkat. Audio disimpan di browser—tanpa dikirim ke server pada tahap ini.</p>
+          <div class="hero-tags"><span>● Mikrofon</span><span>● Offline-ready</span><span>● Penyimpanan lokal</span></div>
+        </div>
+        <div class="record-orb"><div class="orb-inner"><span class="mic-symbol">🎙</span><span id="orb-status">SIAP MEREKAM</span></div></div>
+      </section>
+
+      <section class="record-panel">
+        <div class="section-head"><div><p class="eyebrow">SESI BARU</p><h3>Mulai rekaman</h3></div><span class="step-label">01 / RECORD</span></div>
+        <div class="form-grid">
+          <label>Judul rapat<input id="meeting-title" maxlength="120" placeholder="Contoh: Rapat Persiapan TKA Kelas 6" value="Rapat Baru"></label>
+          <label>Jenis rapat<select id="meeting-type"><option value="offline">Rapat offline / tatap muka</option><option value="online">Rapat online</option><option value="other">Lainnya</option></select></label>
+        </div>
+        <div class="recording-display">
+          <div class="record-state"><span class="record-indicator" id="record-indicator"></span><span id="record-state-text">Siap. Izinkan akses mikrofon untuk mulai.</span></div>
+          <div class="timer" id="timer">00:00:00</div>
+          <div class="wave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        </div>
+        <div class="controls">
+          <button class="btn btn-primary" id="start-btn"><span>●</span> Mulai rekam</button>
+          <button class="btn btn-soft" id="pause-btn" disabled>Ⅱ Pause</button>
+          <button class="btn btn-danger" id="stop-btn" disabled>■ Selesaikan</button>
+        </div>
+        <p class="hint">Tips: tetap buka halaman selama merekam. Di beberapa HP, rekaman dapat terhenti saat layar terkunci atau browser masuk ke latar belakang.</p>
+      </section>
+
+      <section class="library" id="library">
+        <div class="section-head"><div><p class="eyebrow">ARSIP PERANGKAT</p><h3>Riwayat rekaman</h3></div><span class="count-pill" id="recording-count">0 rekaman</span></div>
+        <div id="recordings-list" class="recordings-list">
+          <div class="empty-state"><div class="empty-icon">♫</div><strong>Belum ada rekaman</strong><p>Rekaman rapat yang selesai akan muncul di sini.</p></div>
+        </div>
+      </section>
+      <footer class="footer">Husnayain Meeting Notes <span>•</span> Tahap 1 · Perekaman lokal</footer>
+    </main>
+  </div>
+  <div class="toast" id="toast" role="status"></div>
+  <script src="app.js"></script>
+</body>
+</html>
