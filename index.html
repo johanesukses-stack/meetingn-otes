@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#10243a">
-  <meta name="description" content="Perekam rapat offline dan online dengan penyimpanan lokal.">
-  <title>Husnayain Meeting AI — Tahap 1</title>
+  <meta name="description" content="Perekam rapat dengan transkripsi AI dan pemisahan pembicara.">
+  <title>Husnayain Meeting AI — Tahap 2</title>
   <link rel="manifest" href="manifest.json">
   <link rel="icon" href="icon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="style.css">
@@ -20,23 +20,26 @@
       <nav>
         <a class="nav-item active" href="#recorder"><span>◉</span> Perekam</a>
         <a class="nav-item" href="#library"><span>▤</span> Riwayat rekaman</a>
+        <a class="nav-item" href="#settings" id="nav-settings"><span>⚙</span> Pengaturan AI</a>
       </nav>
       <div class="side-note"><span class="dot"></span> Penyimpanan lokal aktif<br><small>Audio tersimpan di perangkat ini</small></div>
-      <div class="sidebar-footer">TAHAP 1 · PWA RECORDER</div>
+      <div class="sidebar-footer">TAHAP 2 · TRANSKRIP AI</div>
     </aside>
 
     <main>
       <header class="topbar">
         <div><p class="eyebrow">ASISTEN RAPAT DIGITAL</p><h1>Ruang Rapat</h1></div>
-        <div class="local-badge"><span class="dot"></span> Lokal & privat</div>
+        <div class="top-actions">
+          <button class="local-badge badge-btn" id="settings-btn" type="button">⚙ Pengaturan AI</button>
+        </div>
       </header>
 
       <section class="hero" id="recorder">
         <div class="hero-copy">
           <p class="eyebrow light">REKAM RAPAT</p>
           <h2>Setiap diskusi,<br><em>tercatat dengan baik.</em></h2>
-          <p>Rekam rapat offline maupun online dari mikrofon perangkat. Audio disimpan di browser—tanpa dikirim ke server pada tahap ini.</p>
-          <div class="hero-tags"><span>● Mikrofon</span><span>● Offline-ready</span><span>● Penyimpanan lokal</span></div>
+          <p>Rekam rapat dari mikrofon perangkat. Audio disimpan di browser dan baru dikirim ke server hanya saat kamu menekan tombol Transkripsi.</p>
+          <div class="hero-tags"><span>● Mikrofon</span><span>● Offline-ready</span><span>● Transkrip + pembicara</span></div>
         </div>
         <div class="record-orb"><div class="orb-inner"><span class="mic-symbol">🎙</span><span id="orb-status">SIAP MEREKAM</span></div></div>
       </section>
@@ -66,9 +69,43 @@
           <div class="empty-state"><div class="empty-icon">♫</div><strong>Belum ada rekaman</strong><p>Rekaman rapat yang selesai akan muncul di sini.</p></div>
         </div>
       </section>
-      <footer class="footer">Husnayain Meeting Notes <span>•</span> Tahap 1 · Perekaman lokal</footer>
+      <footer class="footer">Husnayain Meeting Notes <span>•</span> Tahap 2 · Transkripsi &amp; pembicara</footer>
     </main>
   </div>
+
+  <!-- Pengaturan -->
+  <div class="modal" id="settings-modal" hidden>
+    <div class="modal-box">
+      <div class="modal-head"><div><p class="eyebrow">PENGATURAN</p><h3>Koneksi AI</h3></div><button class="small-btn" id="settings-close" type="button">✕</button></div>
+      <div class="form-stack">
+        <label>URL Edge Function<input id="set-url" type="url" placeholder="https://xxxx.supabase.co/functions/v1/transcribe" autocomplete="off"></label>
+        <label>Kode akses<input id="set-key" type="password" placeholder="APP_PASSCODE yang kamu atur di Supabase" autocomplete="off"></label>
+        <p class="hint">Kode akses hanya disimpan di perangkat ini. API key OpenAI tidak pernah ada di aplikasi—hanya di server Supabase.</p>
+        <p class="hint" id="set-result"></p>
+      </div>
+      <div class="modal-actions">
+        <button class="btn btn-soft" id="set-test" type="button">Tes koneksi</button>
+        <button class="btn btn-primary" id="set-save" type="button">Simpan</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Transkrip -->
+  <div class="modal" id="transcript-modal" hidden>
+    <div class="modal-box wide">
+      <div class="modal-head"><div><p class="eyebrow">TRANSKRIP RAPAT</p><h3 id="tr-title"></h3></div><button class="small-btn" id="tr-close" type="button">✕</button></div>
+      <div class="speaker-box">
+        <p class="eyebrow">NAMA PEMBICARA — ubah sesuai peserta rapat</p>
+        <div id="tr-speakers" class="speaker-grid"></div>
+      </div>
+      <div id="tr-body" class="tr-body"></div>
+      <div class="modal-actions">
+        <button class="btn btn-soft" id="tr-copy" type="button">Salin</button>
+        <button class="btn btn-primary" id="tr-download" type="button">↓ Unduh TXT</button>
+      </div>
+    </div>
+  </div>
+
   <div class="toast" id="toast" role="status"></div>
   <script src="app.js"></script>
 </body>
